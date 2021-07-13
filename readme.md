@@ -38,6 +38,8 @@ useEffect(() => {
    if (isAlreadyMounted.current) {
       // Code in here will run every time other than the mount
    }
+})
+useEffect(() => {
    isAlreadyMounted.current = true
 }, [])
 ```
