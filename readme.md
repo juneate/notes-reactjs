@@ -108,14 +108,57 @@ To create context:
    - Best practice is to name the variable with a capital letter, and end with `Context`, for example: `UserContext`
 5. Export the Context object, for example: `export default UserContext`
 
+#### Example context (`user.js`)
+
+```js
+import {createContext} from 'react'
+
+const UserContext = createContext(null)
+
+export default UserContext
+```
+
 ### 2. Provide the context
 
 1. In the Component that will provide the context, import the Context object, for example: `import UserContext from 'contexts/user'`
 2. Wrap the Component(s) that will use the Context data with a provider component, for example: `<UserContext.Provider>...</UserContext.Provider>`
 3. If applicable, set the `value` attribute (property) to the Provider, with the desired data, for example: `<UserContext.Provider value={userData}>...</UserContext.Provider>`
 
+#### Example Provider (`App.js`)
+```js
+import React from 'react'
+import UserContext from 'contexts/user'
+import User from 'pages/UserPage'
+
+const App = () => {
+   return (
+      <UserContext.Provider value={{name:`World`}}>
+         <UserPage />
+      </UserContext.Provider>
+   )
+}
+export default App
+```
+
+
 ### 3. Consume the context
 
 1. In any of the Provider's descendant components, `import` the Context object, for example: `import UserContext from 'contexts/user'`
 2. Import the `useContext` hook from the React library: `import {useContext} from 'react'`
 3. Within the Component, query the context using `useContext`, which will return the `value` data stored in the Provider, for example: `const userData = useContext(UserContext)`
+
+
+#### Example Consumer (`UserPage.js`)
+```js
+import React, {useContext} from 'react'
+import UserContext from 'contexts/user'
+
+const UserPage = () => {
+   const userData = useContext(UserContext)
+
+   return (
+      <h1>Hello, {userData.name}</h1>
+   )
+}
+export default UserPage
+```
